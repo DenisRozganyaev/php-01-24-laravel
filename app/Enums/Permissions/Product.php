@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Enums;
+namespace App\Enums\Permissions;
 
-enum Roles: string
+enum Product: string
 {
-    case ADMIN = 'admin';
-    case MODERATOR = 'moderator';
-    case CUSTOMER = 'customer';
+    case PUBLISH = 'publish product';
+    case EDIT = 'edit product';
+    case DELETE = 'delete product';
 
     public static function values(): array
     {
