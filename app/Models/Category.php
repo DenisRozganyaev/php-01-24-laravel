@@ -7,12 +7,17 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Kyslik\ColumnSortable\Sortable;
 
 class Category extends Model
 {
-    use HasFactory;
+    use HasFactory, Sortable;
 
-    protected $fillable = ['name', 'slug', 'parent_id'];
+    protected $fillable = ['id', 'name', 'slug', 'parent_id', 'created_at', 'updated_at'];
+
+    public $sortable = ['id', 'name', 'parent.name'];
+
+    public $sortableAs = ['products_count', 'childs_count'];
 
     // $category = Category::find(4);
     // $category->parent

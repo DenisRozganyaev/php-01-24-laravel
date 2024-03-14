@@ -13,10 +13,12 @@
             <table class="table table-striped table-hover">
                 <thead>
                 <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Parent</th>
-                    <th>Products count</th>
+                    <th>@sortablelink('id', 'ID')</th>
+                    <th>@sortablelink('name', 'Name')</th>
+                    <th>@sortablelink('parent.name', 'Parent')</th>
+                    <th>@sortablelink('childs_count', 'Childs count')</th>
+                    <th>@sortablelink('products_count', 'Products count')</th>
+                    <th>@sortablelink('created_at', 'Created')</th>
                     <th>Actions</th>
                 </tr>
                 </thead>
@@ -25,9 +27,24 @@
                         <tr>
                             <td>{{$category->id}}</td>
                             <td>{{$category->name}}</td>
-                            <td>{{$category->parent->name ?? '-'}}</td>
+                            <td>
+                                @if ($category->parent)
+                                    <a class="link-dark" href="{{route('admin.categories.edit', $category->parent)}}">{{$category->parent->name}}</a>
+                                @else
+                                    -
+                                @endif
+                            </td>
+                            <td>{{$category->childs_count}}</td>
                             <td>{{$category->products_count}}</td>
-                            <td>Actions</td>
+                            <td>{{$category->created_at}}</td>
+                            <td>
+                                <form action="{{route('admin.categories.destroy', $category)}}" method="POST">
+                                    @csrf
+                                    @method('DELETE')
+                                    <a href="{{route('admin.categories.edit', $category)}}" class="btn btn-warning"><i class="fa-regular fa-pen-to-square"></i></a>
+                                    <button type="submit" class="btn btn-danger"><i class="fa-solid fa-trash-can"></i></button>
+                                </form>
+                            </td>
                         </tr>
                     @endforeach
                 </tbody>
