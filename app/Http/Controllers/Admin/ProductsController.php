@@ -3,8 +3,12 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\Products\CreateRequest;
+use App\Http\Requests\Admin\Products\UpdateRequest;
 use App\Models\Category;
 use App\Models\Product;
+use App\Repositories\Contract\ProductRepositoryContract;
+use App\Repositories\ProductRepository;
 use Illuminate\Http\Request;
 
 class ProductsController extends Controller
@@ -24,46 +28,60 @@ class ProductsController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin/products/create', ['categories' => Category::all()]);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(CreateRequest $request, ProductRepositoryContract $repository)
     {
-        //
+        if ($product = $repository->create($request)) {
+            notify()->success("Product '$product->title' was successfully created");
+            return redirect()->route('admin.products.index');
+        }
+
+        notify()->danger("Oops smth went wrong");
+
+        return redirect()->back()->withInput();
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Product $product)
     {
-        //
+        $categories = Category::all();
+        $productCategories = $product->categories()->get()->pluck('id')->toArray();
+
+        return view('admin/products/edit', compact('categories', 'productCategories', 'product'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateRequest $request, Product $product, ProductRepositoryContract $repository)
     {
-        //
+
+        if ($repository->update($product, $request)) {
+            notify()->success("Product '$product->title' was successfully update");
+            return redirect()->route('admin.products.edit', $product);
+        }
+
+        notify()->danger("Oops smth went wrong");
+
+        return redirect()->back()->withInput();
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Product $product)
     {
-        //
+        $product->categories()->detach();
+        $product->delete();
+
+        return redirect()->route('admin.product.index');
     }
 }

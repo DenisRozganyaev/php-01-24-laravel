@@ -2,12 +2,20 @@
 
 namespace App\Providers;
 
+use App\Http\Controllers\Admin\CategoriesController;
+use App\Http\Controllers\Admin\ProductsController;
+use App\Repositories\Contract\ProductRepositoryContract;
+use App\Repositories\ProductRepository;
+use App\Services\Contract\FileServiceContract;
+use App\Services\FileService;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
     public array $bindings = [
+        ProductRepositoryContract::class => ProductRepository::class,
+        FileServiceContract::class => FileService::class,
     ];
 
     /**
