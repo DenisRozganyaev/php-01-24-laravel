@@ -52,8 +52,10 @@ class ProductsController extends Controller
      */
     public function edit(Product $product)
     {
+        $product->load(['images', 'categories']);
+
         $categories = Category::all();
-        $productCategories = $product->categories()->get()->pluck('id')->toArray();
+        $productCategories = $product->categories->pluck('id')->toArray();
 
         return view('admin/products/edit', compact('categories', 'productCategories', 'product'));
     }
@@ -82,6 +84,6 @@ class ProductsController extends Controller
         $product->categories()->detach();
         $product->delete();
 
-        return redirect()->route('admin.product.index');
+        return redirect()->route('admin.products.index');
     }
 }

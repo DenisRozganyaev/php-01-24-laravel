@@ -5,11 +5,16 @@ namespace App\Repositories;
 use App\Http\Requests\Admin\Products\CreateRequest;
 use App\Http\Requests\Admin\Products\UpdateRequest;
 use App\Models\Product;
+use App\Repositories\Contract\ImageRepositoryContract;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
 class ProductRepository implements Contract\ProductRepositoryContract
 {
+
+    public function __construct(protected ImageRepositoryContract $imageRepository)
+    {
+    }
 
     public function create(CreateRequest $request): Product|false
     {
@@ -54,6 +59,15 @@ class ProductRepository implements Contract\ProductRepositoryContract
     protected function setProductData(Product $product, array $data): void
     {
         $product->categories()->sync($data['categories']);
+
+        if (!empty($data['attributes']['images'])) {
+            $this->imageRepository->attach(
+                $product,
+                'images',
+                $data['attributes']['images'],
+                $product->slug
+            );
+        }
     }
 
     protected function formRequestData(CreateRequest|UpdateRequest $request): array
@@ -61,7 +75,7 @@ class ProductRepository implements Contract\ProductRepositoryContract
         return [
             'attributes' => collect($request->validated())
                 ->except(['categories'])
-                ->merge(['slug' => Str::slug($request->get('title')), 'thumbnail' => 'test'])
+                ->prepend(Str::slug($request->get('title')), 'slug')
                 ->toArray(),
             'categories' => $request->get('categories', [])
         ];
