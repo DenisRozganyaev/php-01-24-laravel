@@ -14,6 +14,7 @@
                 <thead>
                 <tr>
                     <th>@sortablelink('id', 'ID')</th>
+                    <th>Image</th>
                     <th>@sortablelink('title', 'Title')</th>
                     <th>@sortablelink('SKU', 'SKU')</th>
                     <th>@sortablelink('quantity', 'Quantity')</th>
@@ -27,6 +28,9 @@
                     @foreach($products as $product)
                         <tr>
                             <td>{{$product->id}}</td>
+                            <td>
+                                <img src="{{$product->thumbnailUrl}}" alt="{{$product->title}}" width="50" height="75" />
+                            </td>
                             <td>{{$product->title}}</td>
                             <td>{{$product->SKU}}</td>
                             <td>{{$product->quantity}}</td>

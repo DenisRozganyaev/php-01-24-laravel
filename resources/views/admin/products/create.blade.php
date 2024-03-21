@@ -5,7 +5,7 @@
         <div class="row">
             <div class="col-12 mt-5">
                 <form action="{{route('admin.products.store')}}" method="POST"
-                      class="d-flex align-items-center justify-content-center">
+                      class="d-flex align-items-center justify-content-center" enctype="multipart/form-data">
                     <div class="card w-50">
                         <div class="card-header text-center">
                             <h3>Create new product</h3>
@@ -130,6 +130,43 @@
                                 </div>
                             </div>
 
+                            <div class="row text-center mb-3">
+                                <h4>Images</h4>
+                            </div>
+
+                            <div class="row mb-3">
+                                <label for="thumbnail"
+                                       class="col-md-4 col-form-label text-md-end">{{ __('Thumbnail') }}</label>
+
+                                <div class="col-12 mb-4 d-flex align-items-center justify-content-center">
+                                    <img src="#" id="thumbnail-preview" style="width: 50%; display: none;" />
+                                </div>
+
+                                <div class="col-12">
+                                    <input id="thumbnail" type="file"
+                                           class="form-control @error('thumbnail') is-invalid @enderror" name="thumbnail">
+
+                                    @error('thumbnail')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            <div class="row mb-3">
+                                <label for="images"
+                                       class="col-md-4 col-form-label text-md-end">{{ __('Images') }}</label>
+
+                                <div class="col-12 mb-4 d-flex align-items-center justify-content-center">
+                                    <div id="images-wrapper" class="row"></div>
+                                </div>
+
+                                <div class="col-12">
+                                    <input id="images" type="file" class="form-control" name="images[]" multiple />
+                                </div>
+                            </div>
+
 
                         </div>
                         <div class="card-footer d-flex justify-content-end">
@@ -141,3 +178,7 @@
         </div>
     </div>
 @endsection
+
+@push('footer-js')
+    @vite(['resources/js/admin/images-preview.js'])
+@endpush

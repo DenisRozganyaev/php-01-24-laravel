@@ -23,6 +23,6 @@ class FileService implements Contract\FileServiceContract
 
     public function remove(string $filePath): void
     {
-        // TODO: Implement remove() method.
+        Storage::delete($filePath);
     }
 }
