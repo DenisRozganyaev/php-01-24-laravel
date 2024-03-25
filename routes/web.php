@@ -19,6 +19,13 @@ Route::get('/', function () {
 
 Auth::routes();
 
+Route::name('ajax.')->prefix('ajax')->middleware(['auth'])->group(function() {
+   Route::group(['role:admin|moderator'], function() {
+       Route::post('products/{product}/image', \App\Http\Controllers\Ajax\Products\UploadImage::class)->name('products.image.upload');
+       Route::delete('images/{image}', \App\Http\Controllers\Ajax\RemoveImageController::class)->name('image.remove');
+   });
+});
+
 Route::name('admin.')->prefix('admin')->middleware('role:admin|moderator')->group(function() {
     Route::get('/', \App\Http\Controllers\Admin\DashboardController::class)->name('dashboard');
     Route::resource('categories', \App\Http\Controllers\Admin\CategoriesController::class)->except(['show']);
