@@ -14,7 +14,6 @@ class UploadImage extends Controller
         try {
             $data = $request->validated();
             $imagesData = [];
-            ds($data);
             foreach($data['images'] as $image) {
                 $img = $product->images()->create([
                     'path' => [
