@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Services\Contract\FileServiceContract;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -29,11 +30,16 @@ class Product extends Model
         return $this->morphMany(Image::class, 'imageable');
     }
 
+    public function scopeAvailable(Builder $query)
+    {
+        $query->where('quantity', '>', 0);
+    }
+
     public function setThumbnailAttribute($image)
     {
         $fileService = app(FileServiceContract::class);
 
-        if (! empty($this->attributes['thumbnail'])) {
+        if (!empty($this->attributes['thumbnail'])) {
             $fileService->delete($this->attributes['thumbnail']);
         }
 
@@ -45,8 +51,8 @@ class Product extends Model
 
     public function thumbnailUrl(): Attribute
     {
-        return Attribute::get(function() {
-            if (! Storage::has($this->attributes['thumbnail'])) {
+        return Attribute::get(function () {
+            if (!Storage::has($this->attributes['thumbnail'])) {
                 return $this->attributes['thumbnail'];
             }
 

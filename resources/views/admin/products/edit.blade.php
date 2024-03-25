@@ -154,24 +154,35 @@
                             </div>
 
                             <div class="row mb-3">
-                                <label for="images"
+                                <label for="images-upload"
                                        class="col-md-4 col-form-label text-md-end">{{ __('Images') }}</label>
 
-                                <div id="images-wrapper" class="col-12 mb-4">
+                                <div id="images-wrapper" data-url="{{ route('ajax.products.image.upload', $product) }}" class="col-12 mb-4">
                                     @foreach($product->images as $image)
-                                        <div class="row flex-row mb-4 align-items-center justify-content-center">
+                                        <div class="row flex-row mb-4 align-items-center justify-content-center image-item">
                                             <div class="col-8 col-md-10">
                                                 <img src="{{$image->url}}" style="width: 100%">
                                             </div>
                                             <div class="col-4 col-md-2">
-                                                <button class="btn btn-danger"><i class="fa-solid fa-trash-can"></i></button>
+                                                <button class="btn btn-danger image-remove"
+                                                        data-url="{{ route('ajax.image.remove', $image) }}"
+                                                ><i class="fa-solid fa-trash-can"></i></button>
                                             </div>
                                         </div>
                                     @endforeach
                                 </div>
 
-                                <div class="col-12">
-                                    <input id="images" type="file" class="form-control" name="images[]" multiple/>
+                                <div class="row add-btn-wrapper">
+                                    <div class="col-8 d-flex align-items-center justify-content-center">
+                                        <input id="images-upload" type="file" class="d-none form-control" multiple/>
+                                        <div class="spinner-border" role="status" style="display: none;">
+                                            <span class="visually-hidden">Loading...</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <button class="btn btn-success image-add"
+                                        >Add Image <i class="fa-solid fa-plus"></i></button>
+                                    </div>
                                 </div>
                             </div>
 
@@ -188,5 +199,5 @@
 @endsection
 
 @push('footer-js')
-    @vite(['resources/js/admin/images-preview.js'])
+    @vite(['resources/js/admin/images-preview.js', 'resources/js/admin/images-actions.js'])
 @endpush
