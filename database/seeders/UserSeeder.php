@@ -18,11 +18,13 @@ class UserSeeder extends Seeder
     {
         DB::table('users')->truncate();
 
-        if (! User::where('email', self::ADMIN_EMAIL)->exists()) {
+        if (!User::where('email', self::ADMIN_EMAIL)->exists()) {
             (User::factory()->withEmail(self::ADMIN_EMAIL)->create())
                 ->syncRoles(Roles::ADMIN->value);
         }
 
         User::factory(5)->create();
+
+        (User::factory(1)->create())->first()->syncRoles(Roles::MODERATOR->value);
     }
 }
