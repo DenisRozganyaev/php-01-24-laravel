@@ -34,7 +34,8 @@ class UpdateRequest extends FormRequest
             'price' => ['required', 'numeric', 'min:1'],
             'new_price' => ['nullable', 'numeric', 'min:1'],
             'quantity' => ['required', 'numeric', 'min:0'],
-            'categories.*' => ['required', 'numeric', 'exists:' . Category::class . ',id']
+            'categories.*' => ['required', 'numeric', 'exists:' . Category::class . ',id'],
+            'thumbnail' => ['nullable', 'image:jpeg,png'],
         ];
     }
 }

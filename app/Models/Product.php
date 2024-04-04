@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Services\Contract\FileServiceContract;
+use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -40,7 +41,7 @@ class Product extends Model
         $fileService = app(FileServiceContract::class);
 
         if (!empty($this->attributes['thumbnail'])) {
-            $fileService->delete($this->attributes['thumbnail']);
+            $fileService->remove($this->attributes['thumbnail']);
         }
 
         $this->attributes['thumbnail'] = $fileService->upload(
@@ -66,5 +67,20 @@ class Product extends Model
             $this->attributes['new_price'] && $this->attributes['new_price'] > 0 ? $this->attributes['new_price'] : $this->attributes['price'],
             2
         ));
+    }
+
+    public function isExists(): Attribute
+    {
+        return Attribute::get(fn() => $this->attributes['quantity'] > 0);
+    }
+
+    public function rowId(): Attribute
+    {
+        return Attribute::get(fn() => Cart::instance('cart')->content()->where('id', '=', $this->id)?->first()?->rowId);
+    }
+
+    public function isInCart(): Attribute
+    {
+        return Attribute::get(fn() => (bool) $this->rowId);
     }
 }

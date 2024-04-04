@@ -8,7 +8,7 @@
                       class="d-flex align-items-center justify-content-center" enctype="multipart/form-data">
                     <div class="card w-50">
                         <div class="card-header text-center">
-                            <h3>Create new product</h3>
+                            <h3>Edit product</h3>
                         </div>
                         <div class="card-body">
                             @csrf
@@ -189,7 +189,7 @@
 
                         </div>
                         <div class="card-footer d-flex justify-content-end">
-                            <button type="submit" class="btn btn-outline-primary">Create</button>
+                            <button type="submit" class="btn btn-outline-primary">Update</button>
                         </div>
                     </div>
                 </form>
