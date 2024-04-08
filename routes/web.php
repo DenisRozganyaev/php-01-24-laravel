@@ -20,10 +20,15 @@ Auth::routes();
 Route::resource('products', \App\Http\Controllers\ProductsController::class)->only(['index', 'show']);
 Route::resource('categories', \App\Http\Controllers\CategoriesController::class)->only(['index', 'show']);
 
-Route::name('ajax.')->prefix('ajax')->middleware(['auth'])->group(function() {
-   Route::group(['role:admin|moderator'], function() {
+Route::name('ajax.')->prefix('ajax')->group(function() {
+   Route::group(['auth', 'role:admin|moderator'], function() {
        Route::post('products/{product}/image', \App\Http\Controllers\Ajax\Products\UploadImage::class)->name('products.image.upload');
        Route::delete('images/{image}', \App\Http\Controllers\Ajax\RemoveImageController::class)->name('image.remove');
+   });
+
+   Route::prefix('paypal')->name('paypal.')->group(function() {
+      Route::post('order/create', [\App\Http\Controllers\Ajax\Payments\PaypalController::class, 'create'])->name('create'); // ajax.paypal.create
+      Route::post('order/{vendorOrderId}/capture', [\App\Http\Controllers\Ajax\Payments\PaypalController::class, 'capture'])->name('capture'); // ajax.paypal.capture
    });
 });
 
@@ -39,3 +44,4 @@ Route::name('cart.')->prefix('cart')->group(function() {
    Route::delete('/', [\App\Http\Controllers\CartController::class, 'remove'])->name('remove');
    Route::post('{product}/count', [\App\Http\Controllers\CartController::class, 'count'])->name('count');
 });
+Route::get('checkout', \App\Http\Controllers\CheckoutController::class)->name('checkout');

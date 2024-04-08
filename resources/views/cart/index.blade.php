@@ -61,6 +61,8 @@
                         </tr>
                         </tbody>
                     </table>
+                    <br>
+                    <a href="{{route('checkout')}}" class="btn btn-outline-success w-100">Proceed to checkout</a>
                 </div>
             </div>
         </div>
