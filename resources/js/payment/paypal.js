@@ -1,32 +1,84 @@
 import '../bootstrap.js'
 
+const selectors = {
+    form: '#checkout-form'
+}
+
+const errorTemplate = `<span class="invalid-feedback" role="alert">
+    <strong>__</strong>
+</span>`;
+
 function getFields() {
-    return $('#checkout-form').serializeArray()
+    return $(selectors.form).serializeArray()
         .reduce((obj, item) => {
             obj[item.name] = item.value
             return obj
         }, {})
 }
 
+function isEmptyFields() {
+    const fields = getFields()
+
+    return Object.values(fields).some((val) => val.length < 1)
+}
+
 // Render the PayPal button into #paypal-button-container
 paypal.Buttons({
+    onInit: function (data, actions) {
+        actions.disable()
+
+        $(selectors.form).change(() => {
+            if (!isEmptyFields()) {
+                actions.enable()
+            }
+        })
+    },
+
+    onClick: function (data, actions) {
+        if (isEmptyFields()) {
+            iziToast.warning({
+                title: 'Please fill the form',
+                position: 'topRight'
+            })
+        }
+
+        $(selectors.form).find('.is-invalid').removeClass('is-invalid')
+        $(selectors.form).find('.invalid-feedback').remove()
+    },
+
     // Call your server to set up the transaction
     createOrder: function (data, actions) {
         return axios.post('/ajax/paypal/order/create', getFields())
             .then((response) => {
+                console.log('success', response)
                 return response.data.vendor_order_id
             })
             .catch((error) => {
-                console.error('error', error)
+                const response = error.response.data
+                if (response.errors) {
+                    const keys = Object.keys(response.errors)
+
+                    keys.map((key) => {
+                        let $field = $(`input[name="${key}"]`)
+                        $field.addClass('is-invalid')
+                        $field.parent().append(
+                            errorTemplate.replace(
+                                '__',
+                                response.errors[key][0]
+                            )
+                        )
+                    })
+                }
             })
     },
-
+    // ''
+    // php analog: ".... $variable ....."
+    // `.... ${ variable_name } .....`
     // Call your server to finalize the transaction
     onApprove: function (data, actions) {
-        return fetch('/demo/checkout/api/paypal/order/' + data.orderID + '/capture/', {
-            method: 'post'
-        }).then(function (res) {
-            return res.json();
+        return axios.post(`/ajax/paypal/order/${data.orderID}/capture`)
+        .then(function (res) {
+            return res.data;
         }).then(function (orderData) {
             // Three cases to handle:
             //   (1) Recoverable INSTRUMENT_DECLINED -> call actions.restart()
