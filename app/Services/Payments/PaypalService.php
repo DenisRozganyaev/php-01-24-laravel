@@ -62,6 +62,7 @@ class PaypalService implements Contract\PaypalServiceContract
             );
 
             $result['id'] = $order->id;
+            $result['vendorOrderId'] = $vendorOrderId;
             DB::commit();
 
             return response()->json($result);

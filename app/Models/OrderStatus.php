@@ -30,6 +30,21 @@ class OrderStatus extends Model
         return $this->statusQuery($query, OrderStatusEnum::InProcess);
     }
 
+    public function scopePaid(Builder $query): Builder
+    {
+        return $this->statusQuery($query, OrderStatusEnum::Paid);
+    }
+
+    public function scopeCompleted(Builder $query): Builder
+    {
+        return $this->statusQuery($query, OrderStatusEnum::Completed);
+    }
+
+    public function scopeCanceled(Builder $query): Builder
+    {
+        return $this->statusQuery($query, OrderStatusEnum::Canceled);
+    }
+
     protected function statusQuery(Builder $query, OrderStatusEnum $status): Builder
     {
         return $query->where('name', $status->value);

@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 
+use App\Enums\OrderStatusEnum;
 use App\Enums\PaymentSystem;
 use App\Enums\TransactionStatus;
 use App\Models\Order;
@@ -27,7 +28,19 @@ class OrderRepository implements Contract\OrderRepositoryContract
 
     public function setTransaction(string $vendorOrderId, PaymentSystem $system, TransactionStatus $status): Order
     {
-        return new Order();
+        $order = Order::where('vendor_order_id', $vendorOrderId)->firstOrFail();
+        $order->transaction()->create([
+            'payment_system' => $system->value,
+            'status' => $status->value
+        ]);
+
+        $orderStatus = $this->getOrderStatus($status);
+
+        $order->update([
+           'status_id' => $orderStatus->id
+        ]);
+
+        return $order;
     }
 
     protected function addProductsToOrder(Order $order): void
@@ -47,5 +60,14 @@ class OrderRepository implements Contract\OrderRepositoryContract
                 throw new \Exception("Smth went wring with quantity update on product [id: $product->id]");
             }
         });
+    }
+
+    protected function getOrderStatus(TransactionStatus $status): OrderStatus
+    {
+        return match($status->value) {
+            TransactionStatus::Success->value => OrderStatus::paid()->first(),
+            TransactionStatus::Canceled->value => OrderStatus::canceled()->first(),
+            default => OrderStatus::default()->first()
+        };
     }
 }
