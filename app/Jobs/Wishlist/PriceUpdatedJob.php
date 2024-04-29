@@ -31,8 +31,8 @@ class PriceUpdatedJob implements ShouldQueue
     {
         $this->product->followers()
             ->wherePivot('price', true)
-            ->chunk(1_000, function(Collection $users) {
-                logs()->info('Price notification send for users = ' . $users->pluck(['id'])->implode(', '));
+            ->chunk(500, function(Collection $users) {
+                logs()->info('Price notification send for users');
                 Notification::send(
                     $users,
                     app(PriceDownNotification::class, ['product' => $this->product]) // new PriceDownNotification($this->product)
