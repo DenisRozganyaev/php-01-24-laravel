@@ -26,7 +26,7 @@ class Product extends Model
 
     public function getRouteKeyName()
     {
-        return 'slug';
+        return request()->expectsJson() ? 'id' : 'slug';
     }
 
     public function categories(): BelongsToMany
@@ -62,10 +62,14 @@ class Product extends Model
             $fileService->remove($this->attributes['thumbnail']);
         }
 
-        $this->attributes['thumbnail'] = $fileService->upload(
-            $image,
-            $this->attributes['slug']
-        );
+        if (request()->expectsJson()) {
+            $this->attributes['thumbnail'] = $image;
+        } else {
+            $this->attributes['thumbnail'] = $fileService->upload(
+                $image,
+                $this->attributes['slug']
+            );
+        }
     }
 
     public function thumbnailUrl(): Attribute
@@ -85,6 +89,22 @@ class Product extends Model
             $this->attributes['new_price'] && $this->attributes['new_price'] > 0 ? $this->attributes['new_price'] : $this->attributes['price'],
             2
         ));
+    }
+
+    public function discount(): Attribute
+    {
+        return Attribute::get(function() {
+            $price = $this->getAttribute('price');
+            $newPrice = $this->getAttribute('new_price');
+
+           if (!$newPrice) {
+               return null;
+           }
+
+           $result = ($price - $newPrice) / ($price / 100);
+
+           return round($result, 2);
+        });
     }
 
     public function isExists(): Attribute
