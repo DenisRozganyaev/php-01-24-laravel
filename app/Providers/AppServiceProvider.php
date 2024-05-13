@@ -12,10 +12,12 @@ use App\Repositories\OrderRepository;
 use App\Repositories\ProductRepository;
 use App\Services\Contract\FileServiceContract;
 use App\Services\Contract\InvoicesServiceContract;
+use App\Services\Contract\UsersCsvExportContract;
 use App\Services\FileService;
 use App\Services\InvoicesService;
 use App\Services\Payments\Contract\PaypalServiceContract;
 use App\Services\Payments\PaypalService;
+use App\Services\UsersCsvExport;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\ServiceProvider;
 
@@ -27,7 +29,8 @@ class AppServiceProvider extends ServiceProvider
         ImageRepositoryContract::class => ImageRepository::class,
         PaypalServiceContract::class => PaypalService::class,
         OrderRepositoryContract::class => OrderRepository::class,
-        InvoicesServiceContract::class => InvoicesService::class
+        InvoicesServiceContract::class => InvoicesService::class,
+        UsersCsvExportContract::class => UsersCsvExport::class
     ];
 
     /**
