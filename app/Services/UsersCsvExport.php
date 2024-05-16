@@ -4,39 +4,32 @@ namespace App\Services;
 
 use App\Enums\Roles;
 use App\Models\User;
+use App\Models\Order;
 use Illuminate\Support\Facades\Storage;
 
 class UsersCsvExport implements Contract\UsersCsvExportContract
 {
-
     public function generate(): string|false
     {
-        $users = User::select(['id', 'name', 'lastname', 'phone', 'email', 'birthdate', 'created_at', 'updated_at'])
-            ->withCount('orders')
+        $users = User::select(['id', 'name', 'lastname', "phone", 'email', 'birthdate', 'created_at', 'updated_at'])
+            ->withCount("orders")
             ->role(Roles::CUSTOMER)
             ->get();
+
         $csvFileName = 'csv/users1.csv';
 
         $tempFile = tmpFile();
+
+
         $tempFilePath = stream_get_meta_data($tempFile)['uri'];
 
         $handle = fopen($tempFilePath, 'w');
 
         try {
-            fputcsv($handle, ['ID', 'Name', 'Surname', 'Phone', 'Email', 'Birthdate', 'Orders count', 'Created', 'Updated']); // Add more headers as needed
+            fputcsv($handle, ['ID', 'Name', 'Surname', 'Phone', 'Email', 'Birthdate', 'Orders count', 'Created', 'Updated']);
 
             foreach ($users as $user) {
-                fputcsv($handle, [
-                    $user->id,
-                    $user->name,
-                    $user->lastname,
-                    $user->phone,
-                    $user->email,
-                    $user->birthdate,
-                    $user->orders_count,
-                    $user->created_at,
-                    $user->updated_at,
-                ]);
+                fputcsv($handle, [$user->id, $user->name, $user->lastname, $user->phone, $user->email, $user->birthdate, $user->orders_count, $user->created_at, $user->updated_at,]);
             }
             fclose($handle);
 
@@ -44,7 +37,7 @@ class UsersCsvExport implements Contract\UsersCsvExportContract
                 return Storage::url($csvFileName);
             }
         } catch (\Exception $exception) {
-            logs()->error('[UsersCsvExport] Unexpected error', [
+            logs()->error("[UsersCsvExport] Unexpected error", [
                 'error' => $exception->getMessage()
             ]);
         } finally {
