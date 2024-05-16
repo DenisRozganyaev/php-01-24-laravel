@@ -80,10 +80,10 @@
 
         <main class="py-4">
             @yield('content')
-            @yield('12342')
         </main>
     </div>
     <script src="{{ asset('js/iziToast.js') }}"></script>
     @include('vendor.lara-izitoast.toast')
+    @stack('footer-js')
 </body>
 </html>

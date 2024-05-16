@@ -4,7 +4,9 @@ namespace App\Providers;
 
 use App\Http\Controllers\Admin\CategoriesController;
 use App\Http\Controllers\Admin\ProductsController;
+use App\Repositories\Contract\ImageRepositoryContract;
 use App\Repositories\Contract\ProductRepositoryContract;
+use App\Repositories\ImageRepository;
 use App\Repositories\ProductRepository;
 use App\Services\Contract\FileServiceContract;
 use App\Services\FileService;
@@ -16,6 +18,7 @@ class AppServiceProvider extends ServiceProvider
     public array $bindings = [
         ProductRepositoryContract::class => ProductRepository::class,
         FileServiceContract::class => FileService::class,
+        ImageRepositoryContract::class => ImageRepository::class,
     ];
 
     /**
