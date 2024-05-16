@@ -24,6 +24,11 @@ class Product extends Model
 
     public $sortable = ['id', 'title', 'SKU', 'quantity', 'price', 'created_at', 'finalPrice'];
 
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
+
     public function categories(): BelongsToMany
     {
         return $this->belongsToMany(Category::class);

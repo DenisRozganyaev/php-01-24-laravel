@@ -46,7 +46,7 @@
                         <tbody>
                         <tr>
                             <td>Total</td>
-                            <td>{{ $order->total }}</td>
+                            <td>{{ $order->total }}$</td>
                         </tr>
                         <tr>
                             <td>VAT</td>
@@ -85,8 +85,8 @@
                                     </a>
                                 </td>
                                 <td>{{ $product->pivot->quantity }}</td>
-                                <td>{{ $product->pivot->single_price }}</td>
-                                <td>{{ $product->pivot->quantity * $product->pivot->single_price }}</td>
+                                <td>{{ $product->pivot->single_price }}$</td>
+                                <td>{{ $product->pivot->quantity * $product->pivot->single_price }}$</td>
                             </tr>
                         @endforeach
                         </tbody>
@@ -95,8 +95,10 @@
             </div>
             <div class="row">
                 <div class="col-12 mt-5 text-center">
-{{--                    <a class="btn btn-primary" href="{{route('invoice', $order)}}" target="_blank">Get invoice file</a>--}}
                     <a class="btn btn-secondary" href="{{route('home')}}">Home page</a>
+                    @if($showInvoiceBtn)
+                        <a class="btn btn-outline-success" href="{{route('invoice', $order)}}">Get invoice</a>
+                    @endif
                 </div>
             </div>
         </div>

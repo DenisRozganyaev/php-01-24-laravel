@@ -16,7 +16,9 @@ class ThankYouController extends Controller
                 ->where('vendor_order_id', $vendorOrderId)
                 ->firstOrFail();
 
-            return view('orders/thank-you', compact('order'));
+            $showInvoiceBtn = auth()->check() && auth()->id() === $order->user_id;
+
+            return view('orders/thank-you', compact('order', 'showInvoiceBtn'));
         } catch (\Exception $exception) {
             return redirect()->route('home');
         }

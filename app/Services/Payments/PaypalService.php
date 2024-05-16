@@ -28,7 +28,6 @@ class PaypalService implements Contract\PaypalServiceContract
             DB::beginTransaction();
 
             $paypalOrder = $this->paypalClient->createOrder($this->buildOrderRequestData());
-
             $data = array_merge(
                 $request->validated(),
                 [

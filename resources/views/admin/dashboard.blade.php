@@ -1,5 +1,20 @@
 @extends('layouts.admin')
 
 @section('content')
-ADMIN DASHBOARD
+    <div class="container">
+        <div class="row">
+            <div class="col-12 mt-5">
+                @hasrole('admin')
+                    @unless(auth()->user()->telegram_id)
+                        <h3>Telegram widget</h3>
+                        <script async src="https://telegram.org/js/telegram-widget.js?22"
+                                data-telegram-login="{{config('services.telegram-bot-api.name')}}"
+                                data-size="large"
+                                data-auth-url="{{route('callbacks.telegram')}}"
+                                data-request-access="write"></script>
+                    @endunless
+                @endhasrole
+            </div>
+        </div>
+    </div>
 @endsection

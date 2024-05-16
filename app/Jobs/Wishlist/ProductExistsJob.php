@@ -16,8 +16,6 @@ class ProductExistsJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    public $queue = 'wishilist-notify';
-
     /**
      * Create a new job instance.
      */
@@ -33,8 +31,8 @@ class ProductExistsJob implements ShouldQueue
     {
         $this->product->followers()
             ->wherePivot('exist', true)
-            ->chunk(1_000, function(Collection $users) {
-                logs()->info('Exist notification send for users = ' . $users->pluck(['id'])->implode(', '));
+            ->chunk(500, function(Collection $users) {
+                logs()->info('Exist notification send for users');
                 Notification::send(
                     $users,
                     app(ProductAvailableNotification::class, ['product' => $this->product]) // new PriceDownNotification($this->product)
