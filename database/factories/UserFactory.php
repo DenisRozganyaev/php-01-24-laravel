@@ -15,6 +15,10 @@ class UserFactory extends Factory
      * The current password being used by the factory.
      */
     protected static ?string $password;
+    // User::factory(5)->make() => create a collection with 5 obj User
+    // User::factory(5)->create() => will create 5 users records in DB
+    // User::factory(5, ['password' => 'test1234'])->create() => will create 5 users records in DB
+    // User::factory(5, ['password' => 'test1234'])->make()
 
     /**
      * Define the model's default state.
@@ -25,9 +29,12 @@ class UserFactory extends Factory
     {
         return [
             'name' => fake()->name(),
+            'lastname' => fake()->lastName(),
             'email' => fake()->unique()->safeEmail(),
             'email_verified_at' => now(),
-            'password' => static::$password ??= Hash::make('password'),
+            'phone' => fake()->unique()->e164PhoneNumber(),
+            'birthdate' => fake()->dateTimeBetween('-70 years', '-18 years')->format('Y-m-d'),
+            'password' => Hash::make(static::$password ??= 'password'),
             'remember_token' => Str::random(10),
         ];
     }
