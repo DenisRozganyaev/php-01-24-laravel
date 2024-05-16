@@ -21,7 +21,11 @@ class ProductsController extends Controller
             $product->thumbnailUrl,
             ...$product->images->map(fn($image) => $image->url)
         ];
+        $wishes = [
+            'price' => auth()->check() ? auth()->user()->isWishedProduct($product) : false,
+            'exist' => auth()->check() ? auth()->user()->isWishedProduct($product, 'exist') : false
+        ];
 
-        return view('products/show', compact('product', 'gallery'));
+        return view('products/show', compact('product', 'gallery', 'wishes'));
     }
 }

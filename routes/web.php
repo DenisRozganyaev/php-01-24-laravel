@@ -44,4 +44,17 @@ Route::name('cart.')->prefix('cart')->group(function() {
    Route::delete('/', [\App\Http\Controllers\CartController::class, 'remove'])->name('remove');
    Route::post('{product}/count', [\App\Http\Controllers\CartController::class, 'count'])->name('count');
 });
+
 Route::get('checkout', \App\Http\Controllers\CheckoutController::class)->name('checkout');
+Route::get('orders/{vendorOrderId}/thank-you', \App\Http\Controllers\Pages\ThankYouController::class)->name('thankyou');
+
+Route::middleware('auth')->group(function() {
+    Route::prefix('wishlist')->name('wishlist.')->group(function() {
+       Route::post('{product}', [\App\Http\Controllers\WishListController::class, 'add'])->name('add');
+       Route::delete('{product}', [\App\Http\Controllers\WishListController::class, 'remove'])->name('remove');
+    });
+
+    Route::name('account.')->prefix('account')->group(function() {
+       Route::get('wishlist', \App\Http\Controllers\Admin\WishListController::class)->name('wishlist');
+    });
+});

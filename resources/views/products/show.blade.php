@@ -37,6 +37,32 @@
                     <p>Quantity: {{$product->quantity}}</p>
                     <p>Categories: @each('categories.parts.label', $product->categories, 'category')</p>
                     <hr>
+                    @auth()
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <h5 class="card-title">WishList</h5>
+                                @include(
+                                    'products.parts.wishlist.price',
+                                    [
+                                        'product' => $product,
+                                        'isFollowed' => $wishes['price'],
+                                        'mini' => false
+                                    ]
+                                )
+                                @unless($product->isExists)
+                                    <br>
+                                    @include(
+                                        'products.parts.wishlist.exist',
+                                        [
+                                            'product' => $product,
+                                            'isFollowed' => $wishes['exist'],
+                                            'mini' => false
+                                        ]
+                                    )
+                                @endif
+                            </div>
+                        </div>
+                    @endauth()
                     <div class="card">
                         <div class="card-body">
                             <h5 class="card-title">Price: {{$product->finalPrice}}$</h5>
