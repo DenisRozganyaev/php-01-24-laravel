@@ -12,22 +12,21 @@ use LaravelDaily\Invoices\Invoice;
 
 class InvoicesService implements Contract\InvoicesServiceContract
 {
-
     public function generate(Order $order): Invoice
     {
         $order->loadMissing(['transaction', 'products', 'status']);
 
         $customer = new Buyer([
-            'name' => $order->name . ' ' . $order->lastname,
+            'name' => $order->name.' '.$order->lastname,
             'phone' => $order->phone,
             'custom_fields' => [
                 'email' => $order->email,
                 'city' => $order->city,
                 'address' => $order->address,
-            ]
+            ],
         ]);
 
-        $fileName = Str::slug($customer->name . ' ' . $order->vendor_order_id);
+        $fileName = Str::slug($customer->name.' '.$order->vendor_order_id);
         $invoice = Invoice::make('receipt')
             ->series('BIG')
             ->status($order->status->name->value)

@@ -27,7 +27,7 @@ class UpdateRequest extends FormRequest
 
         return [
             'name' => ['required', 'string', 'min:2', 'max:50', Rule::unique(\App\Models\Category::class, 'name')->ignore($id)],
-            'parent_id' => ['nullable', 'numeric', 'exists:' . \App\Models\Category::class . ',id']
+            'parent_id' => ['nullable', 'numeric', 'exists:'.\App\Models\Category::class.',id'],
         ];
     }
 }

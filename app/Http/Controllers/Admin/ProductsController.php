@@ -8,8 +8,6 @@ use App\Http\Requests\Admin\Products\UpdateRequest;
 use App\Models\Category;
 use App\Models\Product;
 use App\Repositories\Contract\ProductRepositoryContract;
-use App\Repositories\ProductRepository;
-use Illuminate\Http\Request;
 
 class ProductsController extends Controller
 {
@@ -38,14 +36,14 @@ class ProductsController extends Controller
     {
         if ($product = $repository->create($request)) {
             notify()->success("Product '$product->title' was successfully created");
+
             return redirect()->route('admin.products.index');
         }
 
-        notify()->danger("Oops smth went wrong");
+        notify()->danger('Oops smth went wrong');
 
         return redirect()->back()->withInput();
     }
-
 
     /**
      * Show the form for editing the specified resource.
@@ -68,10 +66,11 @@ class ProductsController extends Controller
 
         if ($repository->update($product, $request)) {
             notify()->success("Product '$product->title' was successfully update");
+
             return redirect()->route('admin.products.edit', $product);
         }
 
-        notify()->danger("Oops smth went wrong");
+        notify()->danger('Oops smth went wrong');
 
         return redirect()->back()->withInput();
     }

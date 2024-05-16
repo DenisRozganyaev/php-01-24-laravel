@@ -12,13 +12,14 @@ class JoinTelegramController extends Controller
     {
         $data = $telegramLoginAuth->validate($request);
 
-        if (!$data) {
+        if (! $data) {
             notify()->warning('Oops, smth went wrong with telegram connection');
+
             return redirect()->route('admin.dashboard');
         }
 
         auth()->user()->update([
-            'telegram_id' => $data->getId()
+            'telegram_id' => $data->getId(),
         ]);
 
         notify()->success('You\'re added to our telegram bot');

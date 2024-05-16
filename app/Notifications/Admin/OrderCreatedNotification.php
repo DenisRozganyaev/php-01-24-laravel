@@ -17,7 +17,9 @@ class OrderCreatedNotification extends Notification implements ShouldQueue
     /**
      * Create a new notification instance.
      */
-    public function __construct(public readonly Order $order){}
+    public function __construct(public readonly Order $order)
+    {
+    }
 
     public function viaQueues(): array
     {
@@ -45,14 +47,14 @@ class OrderCreatedNotification extends Notification implements ShouldQueue
         logs()->info('notify admin by email');
         $url = route('admin.dashboard');
 
-        return (new MailMessage)
-                    ->line("Hello, $notifiable->name $notifiable->lastname!")
-                    ->line("There is a new order")
-                    ->line('')
-                    ->line("Total: " . $this->order->total)
-                    ->line('')
-                    ->line('You can check it in admin panel')
-                    ->action('Admin dashboard', $url);
+        return (new MailMessage())
+            ->line("Hello, $notifiable->name $notifiable->lastname!")
+            ->line('There is a new order')
+            ->line('')
+            ->line('Total: '.$this->order->total)
+            ->line('')
+            ->line('You can check it in admin panel')
+            ->action('Admin dashboard', $url);
     }
 
     /**
@@ -68,9 +70,9 @@ class OrderCreatedNotification extends Notification implements ShouldQueue
         return TelegramMessage::create()
             ->to($notifiable->telegram_id)
             ->content("Hello, $notifiable->name $notifiable->lastname!")
-            ->line("There is a new order")
+            ->line('There is a new order')
             ->line('')
-            ->line("Total: " . $this->order->total)
+            ->line('Total: '.$this->order->total)
             ->line('')
             ->line('You can check it in admin panel')
             ->button('Admin panel', $url);

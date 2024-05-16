@@ -2,8 +2,6 @@
 
 namespace App\Providers;
 
-use App\Http\Controllers\Admin\WishListController;
-use App\Http\Controllers\InvoicesController;
 use App\Repositories\Contract\ImageRepositoryContract;
 use App\Repositories\Contract\OrderRepositoryContract;
 use App\Repositories\Contract\ProductRepositoryContract;
@@ -30,7 +28,7 @@ class AppServiceProvider extends ServiceProvider
         PaypalServiceContract::class => PaypalService::class,
         OrderRepositoryContract::class => OrderRepository::class,
         InvoicesServiceContract::class => InvoicesService::class,
-        UsersCsvExportContract::class => UsersCsvExport::class
+        UsersCsvExportContract::class => UsersCsvExport::class,
     ];
 
     /**

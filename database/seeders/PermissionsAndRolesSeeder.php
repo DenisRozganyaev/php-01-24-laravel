@@ -8,7 +8,6 @@ use App\Enums\Permissions\Order;
 use App\Enums\Permissions\Product;
 use App\Enums\Permissions\User;
 use App\Enums\Roles;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
@@ -31,7 +30,7 @@ class PermissionsAndRolesSeeder extends Seeder
             ...Account::cases(),
         ];
 
-        foreach($permissions as $permission) {
+        foreach ($permissions as $permission) {
             Permission::findOrCreate($permission->value);
         }
 
@@ -44,7 +43,7 @@ class PermissionsAndRolesSeeder extends Seeder
             (Role::create(['name' => Roles::MODERATOR->value]))
                 ->givePermissionTo([
                     ...Category::values(),
-                    ...Product::values()
+                    ...Product::values(),
                 ]);
         }
 

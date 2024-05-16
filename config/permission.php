@@ -182,5 +182,5 @@ return [
          */
 
         'store' => 'default',
-    ]
+    ],
 ];

@@ -5,7 +5,6 @@ namespace App\Policies;
 use App\Enums\Roles;
 use App\Models\Order;
 use App\Models\User;
-use Illuminate\Auth\Access\Response;
 
 class OrderPolicy
 {

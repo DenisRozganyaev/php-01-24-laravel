@@ -31,7 +31,7 @@ class CartController extends Controller
     public function remove(Request $request)
     {
         $data = $request->validate([
-           'rowId' => ['required', 'string']
+            'rowId' => ['required', 'string'],
         ]);
 
         Cart::instance('cart')->remove($data['rowId']);
@@ -45,11 +45,10 @@ class CartController extends Controller
     {
         $data = $request->validate([
             'rowId' => ['required', 'string'],
-            'count' => ['required', 'numeric', 'min:1', 'max:' . $product->quantity]
+            'count' => ['required', 'numeric', 'min:1', 'max:'.$product->quantity],
         ]);
 
         Cart::instance('cart')->update($data['rowId'], $data['count']);
-
 
         notify()->success('Product count was updated');
 
