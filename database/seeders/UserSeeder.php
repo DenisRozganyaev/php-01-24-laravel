@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Enums\Roles;
 use App\Models\User;
+use App\Models\Order;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
