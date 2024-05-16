@@ -17,4 +17,4 @@ jobs:
             testMode: true
             useComposer: true
             onlyDirty: true
-          
+            configPath: './pint.json'
