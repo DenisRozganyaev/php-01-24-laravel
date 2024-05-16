@@ -77,3 +77,12 @@ Route::middleware('auth')->group(function() {
 
     Route::get('invoices/{order}', \App\Http\Controllers\InvoicesController::class)->name('invoice');
 });
+
+Route::get('notify-admin', function() {
+    \App\Events\Admin\NotifyEvent::dispatch('message from event to websocket');
+});
+
+Route::get('csv', function() {
+    $generator = app(\App\Services\Contract\UsersCsvExportContract::class);
+    dd($generator->generate());
+});
