@@ -11,8 +11,8 @@ class UsersCsvExport implements Contract\UsersCsvExportContract
 {
     public function generate(): string|false
     {
-        $users = User::select(['id', 'name', 'lastname', 'phone', 'email', 'birthdate', 'created_at', 'updated_at'])
-            ->withCount('orders')
+        $users = User::select(['id', 'name', 'lastname', "phone", 'email', 'birthdate', 'created_at', 'updated_at'])
+            ->withCount("orders")
             ->role(Roles::CUSTOMER)
             ->get();
 
@@ -37,7 +37,7 @@ class UsersCsvExport implements Contract\UsersCsvExportContract
                 return Storage::url($csvFileName);
             }
         } catch (\Exception $exception) {
-            logs()->error('[UsersCsvExport] Unexpected error', [
+            logs()->error("[UsersCsvExport] Unexpected error", [
                 'error' => $exception->getMessage()
             ]);
         } finally {
