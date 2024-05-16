@@ -22,6 +22,9 @@ class CreateRequest extends FormRequest
      */
     public function rules(): array
     {
+        // create test with valid data
+        // create test with invalid name
+        // create test with invalid parent_id
         return [
             'name' => ['required', 'string', 'min:2', 'max:50', 'unique:' . \App\Models\Category::class],
             'parent_id' => ['nullable', 'numeric', 'exists:' . \App\Models\Category::class . ',id']
