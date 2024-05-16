@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Enums\Roles;
 use App\Models\User;
 use App\Models\Order;
+use App\Models\Product;
 use Illuminate\Support\Facades\Storage;
 
 class UsersCsvExport implements Contract\UsersCsvExportContract
@@ -34,7 +35,10 @@ class UsersCsvExport implements Contract\UsersCsvExportContract
             fclose($handle);
 
             if (Storage::put($csvFileName, file_get_contents($tempFilePath))) {
+
                 return Storage::url($csvFileName);
+
+
             }
         } catch (\Exception $exception) {
             logs()->error("[UsersCsvExport] Unexpected error", [
