@@ -12,9 +12,9 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        $this->call(PermissionsAndRolesSeeder::class);
+//        $this->call(PermissionsAndRolesSeeder::class);
         $this->call(UserSeeder::class);
-        $this->call(CategoryProductSeeder::class);
+//        $this->call(CategoryProductSeeder::class);
         // \App\Models\User::factory(10)->create();
 
 //         \App\Models\User::factory(5)->create( ['password' => 'test1234']);
