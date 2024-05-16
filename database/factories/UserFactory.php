@@ -50,6 +50,7 @@ class UserFactory extends Factory
         });
     }
 
+    // User::factory(10, ['email' => 'test@mail.com'])->create()
     public function withEmail(string $email)
     {
         return $this->state(fn (array $attrs) => ['email' => $email]);
