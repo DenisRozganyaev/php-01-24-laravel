@@ -4,8 +4,58 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "44589c1878e7f67a3301cbeffba8dcd7",
+    "content-hash": "d200238b63a14fb329fa705255737fff",
     "packages": [
+        {
+            "name": "appslabke/lara-izitoast",
+            "version": "v1.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/AppsLab-KE/lara-izitoast.git",
+                "reference": "9636c4c3b28855c5d9c6169a10499f6b59568e0a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/AppsLab-KE/lara-izitoast/zipball/9636c4c3b28855c5d9c6169a10499f6b59568e0a",
+                "reference": "9636c4c3b28855c5d9c6169a10499f6b59568e0a",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.6"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "LaraIzitoast\\LaraIzitoastServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "files": [
+                    "lara-izitoast/src/helpers.php"
+                ],
+                "psr-4": {
+                    "LaraIzitoast\\": "lara-izitoast/src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "MARVIN COLLINS",
+                    "email": "marvin@appslab.co.ke"
+                }
+            ],
+            "description": "Simplified wrapper for izitoast javascript notification library",
+            "support": {
+                "issues": "https://github.com/AppsLab-KE/lara-izitoast/issues",
+                "source": "https://github.com/AppsLab-KE/lara-izitoast/tree/v1.1.1"
+            },
+            "time": "2019-01-31T12:43:02+00:00"
+        },
         {
             "name": "brick/math",
             "version": "0.11.0",
@@ -1044,6 +1094,67 @@
                 }
             ],
             "time": "2023-12-03T19:50:20+00:00"
+        },
+        {
+            "name": "kyslik/column-sortable",
+            "version": "6.6.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Kyslik/column-sortable.git",
+                "reference": "0f753dfd34338e87a8964a3fb2cd10fa86174b3c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Kyslik/column-sortable/zipball/0f753dfd34338e87a8964a3fb2cd10fa86174b3c",
+                "reference": "0f753dfd34338e87a8964a3fb2cd10fa86174b3c",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/database": "5.8.*|^6.0|^7.0|^8.0|^9.0|^10.0|^11.0",
+                "illuminate/support": "5.8.*|^6.0|^7.0|^8.0|^9.0|^10.0|^11.0",
+                "php": ">=7.2"
+            },
+            "require-dev": {
+                "orchestra/testbench": "^5.0|^7.0|^8.0|^9.0",
+                "phpunit/phpunit": "^8.5|^9.5.10|^10.5"
+            },
+            "type": "package",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Kyslik\\ColumnSortable\\ColumnSortableServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Kyslik\\ColumnSortable\\": "src/ColumnSortable/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Martin Kiesel",
+                    "email": "martin.kiesel@gmail.com",
+                    "role": "Developer and maintainer"
+                }
+            ],
+            "description": "Package for handling column sorting in Laravel 6.x",
+            "keywords": [
+                "column",
+                "laravel",
+                "sort",
+                "sortable",
+                "sorting"
+            ],
+            "support": {
+                "issues": "https://github.com/Kyslik/column-sortable/issues",
+                "source": "https://github.com/Kyslik/column-sortable/tree/6.6.0"
+            },
+            "time": "2024-03-14T08:22:23+00:00"
         },
         {
             "name": "laravel/framework",
@@ -6422,6 +6533,146 @@
                 "source": "https://github.com/hamcrest/hamcrest-php/tree/v2.0.1"
             },
             "time": "2020-07-09T08:09:16+00:00"
+        },
+        {
+            "name": "laradumps/laradumps",
+            "version": "v2.5.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/laradumps/laradumps.git",
+                "reference": "ad6fc052630b18d12ea82cd841bcafa784ac57e8"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/laradumps/laradumps/zipball/ad6fc052630b18d12ea82cd841bcafa784ac57e8",
+                "reference": "ad6fc052630b18d12ea82cd841bcafa784ac57e8",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/mail": "^9.0|^10.0|^11.0",
+                "illuminate/support": "^9.0|^10.0|^11.0",
+                "laradumps/laradumps-core": "^1.2",
+                "nunomaduro/termwind": "^1.15.1|^2.0.0",
+                "php": "^8.1"
+            },
+            "require-dev": {
+                "larastan/larastan": "^2.7",
+                "laravel/framework": "^11.0",
+                "laravel/pint": "^1.13.7",
+                "mockery/mockery": "^1.6",
+                "orchestra/testbench-core": "^7.0",
+                "pestphp/pest": "^2.32",
+                "symfony/var-dumper": "^5.4.0|^6.4.0|^7.0.3"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "LaraDumps\\LaraDumps\\LaraDumpsServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "files": [
+                    "src/functions.php"
+                ],
+                "psr-4": {
+                    "LaraDumps\\LaraDumps\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Luan Freitas",
+                    "email": "luanfreitas10@protonmail.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "A Dump Component for Laravel.",
+            "homepage": "https://github.com/laradumps/laradumps",
+            "support": {
+                "issues": "https://github.com/laradumps/laradumps/issues",
+                "source": "https://github.com/laradumps/laradumps/tree/v2.5.1"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/luanfreitasdev",
+                    "type": "github"
+                }
+            ],
+            "time": "2024-03-05T13:01:59+00:00"
+        },
+        {
+            "name": "laradumps/laradumps-core",
+            "version": "v1.2.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/laradumps/laradumps-core.git",
+                "reference": "fca5ee84431e60232407831890871d4294d248dc"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/laradumps/laradumps-core/zipball/fca5ee84431e60232407831890871d4294d248dc",
+                "reference": "fca5ee84431e60232407831890871d4294d248dc",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*",
+                "nunomaduro/termwind": "^1.0|^2.0",
+                "php": "^8.1",
+                "ramsey/uuid": "^4.7.5",
+                "spatie/backtrace": "^1.0",
+                "symfony/console": "^5.0|^6.0|^7.0",
+                "symfony/finder": "^5.0|^6.0|^7.0",
+                "symfony/process": "^5.0|^6.0|^7.0",
+                "symfony/var-dumper": "^5.0|^6.0|^7.0",
+                "vlucas/phpdotenv": "^5.6"
+            },
+            "require-dev": {
+                "illuminate/support": "^10.43",
+                "laravel/pint": "^1.13.7",
+                "pestphp/pest": "^2.28.1",
+                "phpstan/phpstan": "^1.10.50"
+            },
+            "bin": [
+                "bin/laradumps"
+            ],
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "src/functions.php"
+                ],
+                "psr-4": {
+                    "LaraDumps\\LaraDumpsCore\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Luan Freitas",
+                    "email": "luanfreitas10@protonmail.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "A dump component for php code.",
+            "homepage": "https://github.com/laradumps/laradumps-core",
+            "support": {
+                "issues": "https://github.com/laradumps/laradumps-core/issues",
+                "source": "https://github.com/laradumps/laradumps-core/tree/v1.2.5"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/luanfreitasdev",
+                    "type": "github"
+                }
+            ],
+            "time": "2024-03-05T12:20:51+00:00"
         },
         {
             "name": "laravel/pint",

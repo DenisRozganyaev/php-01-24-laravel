@@ -12,9 +12,10 @@
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
+    <link href="{{ asset('css/iziToast.css') }}" rel="stylesheet">
 
     <!-- Scripts -->
-    @vite(['resources/sass/app.scss', 'resources/js/app.js'])
+    @vite(['resources/scss/app.scss', 'resources/js/app.js'])
 </head>
 <body>
     <div id="app">
@@ -46,8 +47,8 @@
                             </a>
 
                             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="#">All Products</a>
-                                <a class="dropdown-item" href="#">Create Product</a>
+                                <a class="dropdown-item" href="{{ route('admin.products.index') }}">All Products</a>
+                                <a class="dropdown-item" href="{{ route('admin.products.create') }}">Create Product</a>
                             </div>
                         </li>
                     </ul>
@@ -82,5 +83,7 @@
             @yield('12342')
         </main>
     </div>
+    <script src="{{ asset('js/iziToast.js') }}"></script>
+    @include('vendor.lara-izitoast.toast')
 </body>
 </html>
