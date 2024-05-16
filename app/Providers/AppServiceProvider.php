@@ -3,8 +3,10 @@
 namespace App\Providers;
 
 use App\Repositories\Contract\ImageRepositoryContract;
+use App\Repositories\Contract\OrderRepositoryContract;
 use App\Repositories\Contract\ProductRepositoryContract;
 use App\Repositories\ImageRepository;
+use App\Repositories\OrderRepository;
 use App\Repositories\ProductRepository;
 use App\Services\Contract\FileServiceContract;
 use App\Services\FileService;
@@ -19,7 +21,8 @@ class AppServiceProvider extends ServiceProvider
         ProductRepositoryContract::class => ProductRepository::class,
         FileServiceContract::class => FileService::class,
         ImageRepositoryContract::class => ImageRepository::class,
-        PaypalServiceContract::class => PaypalService::class
+        PaypalServiceContract::class => PaypalService::class,
+        OrderRepositoryContract::class => OrderRepository::class
     ];
 
     /**
