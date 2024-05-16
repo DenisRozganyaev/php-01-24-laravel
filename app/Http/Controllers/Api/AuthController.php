@@ -9,18 +9,17 @@ use Illuminate\Validation\Rules\Password;
 
 class AuthController extends Controller
 {
-
     public function __invoke(Request $request)
     {
         $data = $request->validate([
             'email' => ['required', 'email', 'max:255', 'exists:'.User::class.',email'],
-            'password' => ['required', 'string', Password::default()]
+            'password' => ['required', 'string', Password::default()],
         ]);
 
         if (! auth()->attempt($data)) {
             return response()->json([
-               'status' => 'error',
-               'message' => 'Invalid Credentials'
+                'status' => 'error',
+                'message' => 'Invalid Credentials',
             ], 422);
         }
 
@@ -35,8 +34,8 @@ class AuthController extends Controller
         return response()->json([
             'status' => 'success',
             'data' => [
-                'token' => $token->plainTextToken
-            ]
+                'token' => $token->plainTextToken,
+            ],
         ]);
     }
 }

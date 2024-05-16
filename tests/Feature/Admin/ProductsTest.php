@@ -27,7 +27,7 @@ class ProductsTest extends TestCase
 
         $this->mock(
             FileService::class,
-            function(MockInterface $mock) use ($slug) {
+            function (MockInterface $mock) use ($slug) {
                 $mock->shouldReceive('upload')
                     ->andReturn("$slug/uploaded_image.png");
             }
@@ -37,8 +37,8 @@ class ProductsTest extends TestCase
             ->post(route('admin.products.store'), $data);
 
         $this->assertDatabaseHas(Product::class, [
-           'title' => $data['title'],
-           'thumbnail' => "$slug/uploaded_image.png"
+            'title' => $data['title'],
+            'thumbnail' => "$slug/uploaded_image.png",
         ]);
     }
 }

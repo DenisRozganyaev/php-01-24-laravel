@@ -58,7 +58,7 @@ class Product extends Model
     {
         $fileService = app(FileServiceContract::class);
 
-        if (!empty($this->attributes['thumbnail'])) {
+        if (! empty($this->attributes['thumbnail'])) {
             $fileService->remove($this->attributes['thumbnail']);
         }
 
@@ -75,7 +75,7 @@ class Product extends Model
     public function thumbnailUrl(): Attribute
     {
         return Attribute::get(function () {
-            if (!Storage::has($this->attributes['thumbnail'])) {
+            if (! Storage::has($this->attributes['thumbnail'])) {
                 return $this->attributes['thumbnail'];
             }
 
@@ -85,7 +85,7 @@ class Product extends Model
 
     public function finalPrice(): Attribute
     {
-        return Attribute::get(fn() => round(
+        return Attribute::get(fn () => round(
             $this->attributes['new_price'] && $this->attributes['new_price'] > 0 ? $this->attributes['new_price'] : $this->attributes['price'],
             2
         ));
@@ -93,32 +93,32 @@ class Product extends Model
 
     public function discount(): Attribute
     {
-        return Attribute::get(function() {
+        return Attribute::get(function () {
             $price = $this->getAttribute('price');
             $newPrice = $this->getAttribute('new_price');
 
-           if (!$newPrice) {
-               return null;
-           }
+            if (! $newPrice) {
+                return null;
+            }
 
-           $result = ($price - $newPrice) / ($price / 100);
+            $result = ($price - $newPrice) / ($price / 100);
 
-           return round($result, 2);
+            return round($result, 2);
         });
     }
 
     public function isExists(): Attribute
     {
-        return Attribute::get(fn() => $this->attributes['quantity'] > 0);
+        return Attribute::get(fn () => $this->attributes['quantity'] > 0);
     }
 
     public function rowId(): Attribute
     {
-        return Attribute::get(fn() => Cart::instance('cart')->content()->where('id', '=', $this->id)?->first()?->rowId);
+        return Attribute::get(fn () => Cart::instance('cart')->content()->where('id', '=', $this->id)?->first()?->rowId);
     }
 
     public function isInCart(): Attribute
     {
-        return Attribute::get(fn() => (bool) $this->rowId);
+        return Attribute::get(fn () => (bool) $this->rowId);
     }
 }

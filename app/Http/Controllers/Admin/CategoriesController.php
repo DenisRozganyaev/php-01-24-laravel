@@ -6,12 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Categories\CreateRequest;
 use App\Http\Requests\Admin\Categories\UpdateRequest;
 use App\Models\Category;
-use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
 class CategoriesController extends Controller
 {
-
     public function index()
     {
         $categories = Category::with(['parent'])
@@ -75,7 +73,7 @@ class CategoriesController extends Controller
      */
     public function destroy(Category $category)
     {
-        $this->middleware('permission:' . \App\Enums\Permissions\Category::DELETE->value);
+        $this->middleware('permission:'.\App\Enums\Permissions\Category::DELETE->value);
 
         if ($category->childs()->exists()) {
             $category->childs()->update(['parent_id' => null]);

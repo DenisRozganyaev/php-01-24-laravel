@@ -31,7 +31,7 @@ class ProductExistsJob implements ShouldQueue
     {
         $this->product->followers()
             ->wherePivot('exist', true)
-            ->chunk(500, function(Collection $users) {
+            ->chunk(500, function (Collection $users) {
                 logs()->info('Exist notification send for users');
                 Notification::send(
                     $users,

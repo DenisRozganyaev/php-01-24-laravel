@@ -25,15 +25,15 @@ class CreateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => ['required', 'string', 'min:2', 'max:255', 'unique:' . Product::class],
+            'title' => ['required', 'string', 'min:2', 'max:255', 'unique:'.Product::class],
             'description' => ['nullable', 'string'],
-            'SKU' => ['required', 'string', 'min:1', 'max:35', 'unique:' . Product::class],
+            'SKU' => ['required', 'string', 'min:1', 'max:35', 'unique:'.Product::class],
             'price' => ['required', 'numeric', 'min:1'],
             'new_price' => ['nullable', 'numeric', 'min:1'],
             'quantity' => ['required', 'numeric', 'min:0'],
-            'categories.*' => ['required', 'numeric', 'exists:' . Category::class . ',id'],
+            'categories.*' => ['required', 'numeric', 'exists:'.Category::class.',id'],
             'thumbnail' => ['required', 'image:jpeg,png'],
-            'images.*' => ['image:jpeg,png']
+            'images.*' => ['image:jpeg,png'],
         ];
     }
 }

@@ -32,7 +32,7 @@ class PaypalService implements Contract\PaypalServiceContract
                 $request->validated(),
                 [
                     'vendor_order_id' => $paypalOrder['id'],
-                    'total' => Cart::instance('cart')->total()
+                    'total' => Cart::instance('cart')->total(),
                 ]
             );
 
@@ -43,6 +43,7 @@ class PaypalService implements Contract\PaypalServiceContract
         } catch (\Exception $exception) {
             DB::rollBack();
             logs()->error($exception);
+
             return response()->json(['error' => $exception->getMessage()], 422);
         }
     }
@@ -55,8 +56,8 @@ class PaypalService implements Contract\PaypalServiceContract
             $result = $this->paypalClient->capturePaymentOrder($vendorOrderId);
 
             $order = $this->orderRepository->setTransaction(
-              $vendorOrderId,
-              PaymentSystem::Paypal,
+                $vendorOrderId,
+                PaymentSystem::Paypal,
                 $this->convertedStatus($result['status'])
             );
 
@@ -68,6 +69,7 @@ class PaypalService implements Contract\PaypalServiceContract
         } catch (\Exception $exception) {
             DB::rollBack();
             logs()->error($exception);
+
             return response()->json(['error' => $exception->getMessage()], 422);
         }
     }
@@ -118,16 +120,16 @@ class PaypalService implements Contract\PaypalServiceContract
                         'breakdown' => [
                             'item_total' => [
                                 'currency_code' => config('paypal.currency'),
-                                'value' => $subtotal
+                                'value' => $subtotal,
                             ],
                             'tax_total' => [
                                 'value' => $tax,
                                 'currency_code' => config('paypal.currency'),
-                            ]
-                        ]
+                            ],
+                        ],
                     ],
                     'items' => $items,
-                ]
+                ],
             ],
         ];
     }

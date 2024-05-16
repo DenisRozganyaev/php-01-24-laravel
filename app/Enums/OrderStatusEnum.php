@@ -9,7 +9,7 @@ enum OrderStatusEnum: string
     case Completed = 'Completed';
     case Canceled = 'Canceled';
 
-    static public function findByKey(string $key)
+    public static function findByKey(string $key)
     {
         return constant("self::$key");
     }

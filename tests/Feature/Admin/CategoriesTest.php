@@ -4,8 +4,6 @@ namespace Tests\Feature\Admin;
 
 use App\Enums\Roles;
 use App\Models\Category;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\Feature\Traits\SetupTrait;
 use Tests\TestCase;
 
@@ -50,7 +48,7 @@ class CategoriesTest extends TestCase
         $data = Category::factory()->make()->toArray();
 
         $this->assertDatabaseMissing(Category::class, [
-            'name' => $data['name']
+            'name' => $data['name'],
         ]);
 
         $response = $this->actingAs($this->user())
@@ -60,12 +58,12 @@ class CategoriesTest extends TestCase
         $response->assertRedirectToRoute('admin.categories.index');
 
         $response->assertSessionHas('toasts');
-        $response->assertSessionHas('toasts', function($collection) use ($data) {
+        $response->assertSessionHas('toasts', function ($collection) use ($data) {
             return $collection->first()['message'] === "Category [{$data['name']}] was created.";
         });
 
         $this->assertDatabaseHas(Category::class, [
-           'name' => $data['name']
+            'name' => $data['name'],
         ]);
     }
 
@@ -79,7 +77,7 @@ class CategoriesTest extends TestCase
         $response->assertStatus(302);
         $response->assertSessionHasErrors(['name']);
         $this->assertDatabaseMissing(Category::class, [
-            'name' => $data['name']
+            'name' => $data['name'],
         ]);
     }
 
@@ -90,8 +88,8 @@ class CategoriesTest extends TestCase
 
         $response = $this->actingAs($this->user())
             ->put(route('admin.categories.update', $category), [
-               'name' => $category->name,
-               'parent_id' => $parent->id
+                'name' => $category->name,
+                'parent_id' => $parent->id,
             ]);
 
         $response->assertStatus(302);
@@ -102,7 +100,7 @@ class CategoriesTest extends TestCase
         $this->assertEquals($category->parent_id, $parent->id);
 
         $response->assertSessionHas('toasts');
-        $response->assertSessionHas('toasts', function($collection) use ($category) {
+        $response->assertSessionHas('toasts', function ($collection) use ($category) {
             return $collection->first()['message'] === "Category [{$category->name}] was updated.";
         });
     }
@@ -112,7 +110,7 @@ class CategoriesTest extends TestCase
         $category = Category::factory()->create();
 
         $this->assertDatabaseHas(Category::class, [
-            'id' => $category->id
+            'id' => $category->id,
         ]);
 
         $response = $this->actingAs($this->user())
@@ -121,7 +119,7 @@ class CategoriesTest extends TestCase
         $response->assertStatus(302);
         $response->assertRedirectToRoute('admin.categories.index');
         $this->assertDatabaseMissing(Category::class, [
-            'id' => $category->id
+            'id' => $category->id,
         ]);
     }
 }

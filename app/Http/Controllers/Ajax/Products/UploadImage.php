@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Ajax\Products;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Ajax\Products\UploadImageRequest;
 use App\Models\Product;
-use Illuminate\Http\Request;
 
 class UploadImage extends Controller
 {
@@ -14,12 +13,12 @@ class UploadImage extends Controller
         try {
             $data = $request->validated();
             $imagesData = [];
-            foreach($data['images'] as $image) {
+            foreach ($data['images'] as $image) {
                 $img = $product->images()->create([
                     'path' => [
                         'image' => $image,
-                        'directory' => $product->slug
-                    ]
+                        'directory' => $product->slug,
+                    ],
                 ]);
                 $imagesData[] = ['url' => $img->url, 'id' => $img->id];
             }
@@ -30,7 +29,7 @@ class UploadImage extends Controller
 
             return response(status: 422)
                 ->json([
-                    'message' => $throwable->getMessage()
+                    'message' => $throwable->getMessage(),
                 ]);
         }
     }

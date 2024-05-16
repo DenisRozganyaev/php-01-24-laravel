@@ -14,8 +14,8 @@ class Controller extends BaseController
     {
         $errors = \Session::get('errors')?->getBag('default')?->all(':message');
 
-        if (!empty($errors)) {
-            foreach($errors as $message) {
+        if (! empty($errors)) {
+            foreach ($errors as $message) {
                 notify()->error($message);
             }
         }

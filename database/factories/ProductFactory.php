@@ -11,6 +11,7 @@ use Illuminate\Support\Str;
 class ProductFactory extends Factory
 {
     protected static ?string $title;
+
     /**
      * Define the model's default state.
      *
@@ -28,9 +29,9 @@ class ProductFactory extends Factory
             'description' => fake()->sentences(rand(1, 5), true),
             'SKU' => fake()->unique()->ean13(),
             'price' => $price,
-            'new_price' => (rand(1, 5) % 2 === 0 ? fake()->randomFloat(2, 5, ($price - ($price * 0.05))): null),
+            'new_price' => (rand(1, 5) % 2 === 0 ? fake()->randomFloat(2, 5, ($price - ($price * 0.05))) : null),
             'quantity' => rand(0, 20),
-            'thumbnail' => fake()->imageUrl()
+            'thumbnail' => fake()->imageUrl(),
         ];
     }
 }

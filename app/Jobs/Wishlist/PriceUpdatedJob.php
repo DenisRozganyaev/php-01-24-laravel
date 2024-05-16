@@ -31,7 +31,7 @@ class PriceUpdatedJob implements ShouldQueue
     {
         $this->product->followers()
             ->wherePivot('price', true)
-            ->chunk(500, function(Collection $users) {
+            ->chunk(500, function (Collection $users) {
                 logs()->info('Price notification send for users');
                 Notification::send(
                     $users,

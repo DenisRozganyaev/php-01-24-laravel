@@ -37,13 +37,13 @@ class ProductsController extends Controller
         if ($product = $repository->create($request)) {
             return response()->json([
                 'status' => 'success',
-                'data' => new ProductResource($product)
+                'data' => new ProductResource($product),
             ]);
         }
 
         return response()->json([
             'status' => 'error',
-            'message' => 'Invalid input data'
+            'message' => 'Invalid input data',
         ], 422);
     }
 
@@ -53,6 +53,7 @@ class ProductsController extends Controller
     public function show(Product $product)
     {
         $product->loadMissing(['categories', 'images']);
+
         return new ProductResource($product);
     }
 
@@ -80,7 +81,7 @@ class ProductsController extends Controller
 
             return response()->json([
                 'status' => 'success',
-                'data' => new ProductResource($product)
+                'data' => new ProductResource($product),
             ]);
         } catch (Exception $exception) {
             DB::rollBack();
@@ -88,7 +89,7 @@ class ProductsController extends Controller
 
             return response()->json([
                 'status' => 'error',
-                'message' => $exception->getMessage()
+                'message' => $exception->getMessage(),
             ], 422);
         }
     }

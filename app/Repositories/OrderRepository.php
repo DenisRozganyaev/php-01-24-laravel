@@ -2,8 +2,6 @@
 
 namespace App\Repositories;
 
-
-use App\Enums\OrderStatusEnum;
 use App\Enums\PaymentSystem;
 use App\Enums\TransactionStatus;
 use App\Models\Order;
@@ -31,13 +29,13 @@ class OrderRepository implements Contract\OrderRepositoryContract
         $order = Order::where('vendor_order_id', $vendorOrderId)->firstOrFail();
         $order->transaction()->create([
             'payment_system' => $system->value,
-            'status' => $status->value
+            'status' => $status->value,
         ]);
 
         $orderStatus = $this->getOrderStatus($status);
 
         $order->update([
-           'status_id' => $orderStatus->id
+            'status_id' => $orderStatus->id,
         ]);
 
         return $order;
@@ -64,7 +62,7 @@ class OrderRepository implements Contract\OrderRepositoryContract
 
     protected function getOrderStatus(TransactionStatus $status): OrderStatus
     {
-        return match($status->value) {
+        return match ($status->value) {
             TransactionStatus::Success->value => OrderStatus::paid()->first(),
             TransactionStatus::Canceled->value => OrderStatus::canceled()->first(),
             default => OrderStatus::default()->first()

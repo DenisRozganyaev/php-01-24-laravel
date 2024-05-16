@@ -11,7 +11,6 @@ use Illuminate\Support\Str;
 
 class ProductRepository implements Contract\ProductRepositoryContract
 {
-
     public function __construct(protected ImageRepositoryContract $imageRepository)
     {
     }
@@ -60,7 +59,7 @@ class ProductRepository implements Contract\ProductRepositoryContract
     {
         $product->categories()->sync($data['categories']);
 
-        if (!empty($data['attributes']['images'])) {
+        if (! empty($data['attributes']['images'])) {
             $this->imageRepository->attach(
                 $product,
                 'images',
@@ -77,7 +76,7 @@ class ProductRepository implements Contract\ProductRepositoryContract
                 ->except(['categories'])
                 ->prepend(Str::slug($request->get('title')), 'slug')
                 ->toArray(),
-            'categories' => $request->get('categories', [])
+            'categories' => $request->get('categories', []),
         ];
     }
 }

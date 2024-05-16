@@ -43,8 +43,8 @@ class UserFactory extends Factory
 
     public function configure()
     {
-        return $this->afterCreating(function(User $user) {
-            if (!$user->hasAnyRole(Roles::values())) {
+        return $this->afterCreating(function (User $user) {
+            if (! $user->hasAnyRole(Roles::values())) {
                 $user->assignRole(Roles::CUSTOMER->value);
             }
         });

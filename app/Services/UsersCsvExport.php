@@ -4,22 +4,20 @@ namespace App\Services;
 
 use App\Enums\Roles;
 use App\Models\User;
-use App\Models\Order;
 use Illuminate\Support\Facades\Storage;
 
 class UsersCsvExport implements Contract\UsersCsvExportContract
 {
     public function generate(): string|false
     {
-        $users = User::select(['id', 'name', 'lastname', "phone", 'email', 'birthdate', 'created_at', 'updated_at'])
-            ->withCount("orders")
+        $users = User::select(['id', 'name', 'lastname', 'phone', 'email', 'birthdate', 'created_at', 'updated_at'])
+            ->withCount('orders')
             ->role(Roles::CUSTOMER)
             ->get();
 
         $csvFileName = 'csv/users1.csv';
 
-        $tempFile = tmpFile();
-
+        $tempFile = tmpfile();
 
         $tempFilePath = stream_get_meta_data($tempFile)['uri'];
 
@@ -29,16 +27,18 @@ class UsersCsvExport implements Contract\UsersCsvExportContract
             fputcsv($handle, ['ID', 'Name', 'Surname', 'Phone', 'Email', 'Birthdate', 'Orders count', 'Created', 'Updated']);
 
             foreach ($users as $user) {
-                fputcsv($handle, [$user->id, $user->name, $user->lastname, $user->phone, $user->email, $user->birthdate, $user->orders_count, $user->created_at, $user->updated_at,]);
+                fputcsv($handle, [$user->id, $user->name, $user->lastname, $user->phone, $user->email, $user->birthdate, $user->orders_count, $user->created_at, $user->updated_at]);
             }
             fclose($handle);
 
             if (Storage::put($csvFileName, file_get_contents($tempFilePath))) {
+
                 return Storage::url($csvFileName);
+
             }
         } catch (\Exception $exception) {
-            logs()->error("[UsersCsvExport] Unexpected error", [
-                'error' => $exception->getMessage()
+            logs()->error('[UsersCsvExport] Unexpected error', [
+                'error' => $exception->getMessage(),
             ]);
         } finally {
             fclose($tempFile);
