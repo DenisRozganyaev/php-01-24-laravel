@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\DB;
 
 class UserSeeder extends Seeder
 {
-    const ADMIN_EMAIL = 'admin@admin.com';
+    const ADMIN_EMAIL = "admin@admin.com";
 
     /**
      * Run the database seeds.
