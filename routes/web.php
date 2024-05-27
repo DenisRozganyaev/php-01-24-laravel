@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Callbacks\GoogleAuthController;
 use App\Models\Order;
 use Illuminate\Support\Facades\Route;
 
@@ -83,3 +84,6 @@ Route::get('csv', function () {
     $generator = app(\App\Services\Contract\UsersCsvExportContract::class);
     dd($generator->generate());
 });
+
+Route::get('google/redirect', [GoogleAuthController::class, 'redirectToGoogle'])->name('google.redirect');
+Route::get('google/callback', [GoogleAuthController::class, 'handleGoogleCallback'])->name('google.callback');

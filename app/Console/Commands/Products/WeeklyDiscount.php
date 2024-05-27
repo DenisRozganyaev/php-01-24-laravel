@@ -30,6 +30,7 @@ class WeeklyDiscount extends Command
      */
     public function handle()
     {
+        logs()->info('Command was run');
         $count = (int) $this->option('count');
         $min = (int) $this->option('min');
         $max = (int) $this->option('max');

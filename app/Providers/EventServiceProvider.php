@@ -3,6 +3,8 @@
 namespace App\Providers;
 
 use App\Events\OrderCreated;
+use App\Events\Users\PasswordNotification;
+use App\Listeners\Notifications\Users\PasswordGeneratedListener;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -21,6 +23,9 @@ class EventServiceProvider extends ServiceProvider
         OrderCreated::class => [
             \App\Listeners\Notifications\Orders\CreatedListener::class,
         ],
+        PasswordNotification::class => [
+            PasswordGeneratedListener::class
+        ]
     ];
 
     /**
