@@ -19,4 +19,3 @@ Artisan::command('inspire', function () {
 })->purpose('Display an inspiring quote');
 
 // command('product:weekly-discount --count=4')->everyFiveMinutes();
-

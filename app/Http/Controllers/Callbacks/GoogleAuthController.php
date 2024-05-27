@@ -24,7 +24,7 @@ class GoogleAuthController extends Controller
         $email = $data->offsetGet('email');
         $user = User::where('email', $email)->first();
 
-        if (!$user) {
+        if (! $user) {
             $password = Str::password(rand(8, 16));
             $user = User::create([
                 'name' => $data->offsetGet('given_name'),
@@ -32,7 +32,7 @@ class GoogleAuthController extends Controller
                 'email' => $email,
                 'phone' => null,
                 'birthdate' => null,
-                'password' => Hash::make($password)
+                'password' => Hash::make($password),
             ]);
 
             $user->assignRole(Roles::CUSTOMER);

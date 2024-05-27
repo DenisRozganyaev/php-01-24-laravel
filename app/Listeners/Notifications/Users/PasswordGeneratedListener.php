@@ -3,7 +3,6 @@
 namespace App\Listeners\Notifications\Users;
 
 use App\Events\Users\PasswordNotification;
-use App\Notifications\Admin\OrderCreatedNotification;
 use App\Notifications\Users\PasswordGeneratedNotification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;

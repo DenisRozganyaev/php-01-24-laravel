@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 use App\Enums\Roles;
 use App\Models\User;
-use App\Models\Product;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -19,7 +18,7 @@ class UserSeeder extends Seeder
     {
         DB::table('users')->delete();
 
-        if (! User::where("email", self::ADMIN_EMAIL)->exists()) {
+        if (! User::where('email', self::ADMIN_EMAIL)->exists()) {
             (User::factory()->withEmail(self::ADMIN_EMAIL)->create())
                 ->syncRoles(Roles::ADMIN->value);
         }

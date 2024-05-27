@@ -24,8 +24,8 @@ class EventServiceProvider extends ServiceProvider
             \App\Listeners\Notifications\Orders\CreatedListener::class,
         ],
         PasswordNotification::class => [
-            PasswordGeneratedListener::class
-        ]
+            PasswordGeneratedListener::class,
+        ],
     ];
 
     /**

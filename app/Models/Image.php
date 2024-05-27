@@ -23,10 +23,10 @@ class Image extends Model
 
     public function url(): Attribute
     {
-        return Attribute::get(function() {
-            $key = "products.images." . $this->getAttribute('path');
+        return Attribute::get(function () {
+            $key = 'products.images.'.$this->getAttribute('path');
 
-            if (!Cache::has($key)) {
+            if (! Cache::has($key)) {
                 $link = Storage::temporaryUrl($this->attributes['path'], now()->addMinutes(10));
                 Cache::put($key, $link, 590);
             }

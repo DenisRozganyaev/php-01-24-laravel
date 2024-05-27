@@ -42,10 +42,10 @@ class PasswordGeneratedNotification extends Notification implements ShouldQueue
      */
     public function toMail(User $notifiable): MailMessage
     {
-        return (new MailMessage)
-                    ->line('Welcome to our website')
-                    ->line('Your email: ' . $notifiable->email)
-                    ->line('Your password: ' . $this->password)
-                    ->action('Try to login', url(route('login')));
+        return (new MailMessage())
+            ->line('Welcome to our website')
+            ->line('Your email: '.$notifiable->email)
+            ->line('Your password: '.$this->password)
+            ->action('Try to login', url(route('login')));
     }
 }
