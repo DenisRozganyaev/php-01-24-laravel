@@ -9,6 +9,7 @@
         "anayarojo/shoppingcart": "^4.2",
         "appslabke/lara-izitoast": "^1.1",
         "azate/laravel-telegram-login-auth": "^2.4",
+        "doctrine/dbal": "^3.8",
         "guzzlehttp/guzzle": "^7.2",
         "illuminate/console": "^10.47.0",
         "kyslik/column-sortable": "^6.6",
