@@ -27,7 +27,7 @@ Auth::routes();
 
 Route::name('ajax.')->prefix('ajax')->group(function () {
     Route::group(['auth', 'role:admin|moderator'], function () {
-        Route::post('products/{product}/image', \App\Http\Controllers\Ajax\Products\UploadImage::class)->name('products.image.upload');
+        Route::post('products/{product:slug}/image', \App\Http\Controllers\Ajax\Products\UploadImage::class)->name('products.image.upload');
         Route::delete('images/{image}', \App\Http\Controllers\Ajax\RemoveImageController::class)->name('image.remove');
     });
 
