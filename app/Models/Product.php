@@ -84,13 +84,13 @@ class Product extends Model
     public function thumbnailUrl(): Attribute
     {
         return Attribute::get(function () {
-            $key = "products.thumbnail." . $this->getAttribute('id');
+            $key = 'products.thumbnail.'.$this->getAttribute('id');
 
             if (! Storage::has($this->attributes['thumbnail'])) {
                 return $this->attributes['thumbnail'];
             }
 
-            if (!Cache::has($key)) {
+            if (! Cache::has($key)) {
                 $link = Storage::temporaryUrl($this->attributes['thumbnail'], now()->addMinutes(10));
                 Cache::put($key, $link, 590);
             }
@@ -101,7 +101,7 @@ class Product extends Model
 
     public function finalPrice(): Attribute
     {
-        return Attribute::get(function() {
+        return Attribute::get(function () {
             $price = $this->attributes['new_price'] && $this->attributes['new_price'] > 0 ? $this->attributes['new_price'] : $this->attributes['price'];
 
             $wdRow = $this->weekly_discount;

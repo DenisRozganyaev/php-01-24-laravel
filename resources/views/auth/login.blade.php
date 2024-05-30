@@ -56,9 +56,12 @@
                                 <button type="submit" class="btn btn-primary">
                                     {{ __('Login') }}
                                 </button>
+                                <span class="ms-1 me-1">OR</span>
+                                <a class="btn btn-primary" href="{{route('google.redirect')}}"><i class="fa-brands fa-google"></i> Auth with Google</a>
 
                                 @if (Route::has('password.request'))
-                                    <a class="btn btn-link" href="{{ route('password.request') }}">
+                                    <br>
+                                    <a class="btn btn-link ps-0 mt-1" href="{{ route('password.request') }}">
                                         {{ __('Forgot Your Password?') }}
                                     </a>
                                 @endif

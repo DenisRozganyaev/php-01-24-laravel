@@ -170,6 +170,7 @@ return [
         App\Providers\RouteServiceProvider::class,
         App\Providers\TelescopeServiceProvider::class,
         Spatie\Permission\PermissionServiceProvider::class,
+        SocialiteProviders\Manager\ServiceProvider::class,
     ])->toArray(),
 
     /*

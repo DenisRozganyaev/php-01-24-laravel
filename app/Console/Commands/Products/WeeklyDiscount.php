@@ -3,8 +3,8 @@
 namespace App\Console\Commands\Products;
 
 use App\Models\Product;
-use Illuminate\Console\Command;
 use App\Models\WeeklyDiscount as WDModel;
+use Illuminate\Console\Command;
 
 class WeeklyDiscount extends Command
 {
@@ -30,6 +30,7 @@ class WeeklyDiscount extends Command
      */
     public function handle()
     {
+        logs()->info('Command was run');
         $count = (int) $this->option('count');
         $min = (int) $this->option('min');
         $max = (int) $this->option('max');
@@ -48,9 +49,9 @@ class WeeklyDiscount extends Command
 
         WDModel::all()->each->delete();
 
-        Product::inRandomOrder()->limit($count)->get()->each(function(Product $product) use ($min, $max) {
+        Product::inRandomOrder()->limit($count)->get()->each(function (Product $product) use ($min, $max) {
             $product->weekly_discount()->create([
-                'discount' => rand($min, $max)
+                'discount' => rand($min, $max),
             ]);
         });
     }
